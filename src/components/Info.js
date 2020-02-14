@@ -1,28 +1,25 @@
-import React, { useContext, useEffect } from "react";
-import { Context } from "../context/index";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams } from "react-router-dom";
 import UserCard from "./UserCard";
 import { Row, Col, Container } from "react-bootstrap";
 
+const URL = "https://api.additivasia.io/api/v1/assignment/employees";
 export default function Info() {
   const { name } = useParams();
-  const appContext = useContext(Context);
-  const { directSubs, setDirectSubs } = appContext;
+  const [directSubs, setDirectSubs] = useState([])
 
-  const getDirectSubs = async (name) => {
-    const data = await fetch(URL + `/${name}`).then(res => res.json());
-    const directSubs = data[1] && data[1]['direct-subordinates'];
-    return directSubs;
-  }
-
-  // useEffect(() => {
-  //   const directSubs = await getDirectSubs(name)
-  //   setDirectSubs(directSubs)
-  // },[getDirectSubs,name,setDirectSubs]);
-
-  // console.log(directSubs)
+  useEffect(() => {
+    const getDirectSubs = async () => {
+      const data = await fetch(URL + `/${name}`).then(res => {
+        return res.json()
+      });
+      const directSubs = data[1] && data[1]['direct-subordinates'];
+      setDirectSubs(directSubs)
+    }
+    getDirectSubs()
+  },[name, setDirectSubs]);
 
   return (
     <Container>

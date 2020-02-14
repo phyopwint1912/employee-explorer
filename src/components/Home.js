@@ -1,17 +1,19 @@
-import React, { useContext } from "react";
-import { Context } from "../context/index";
+import React, { useState } from "react";
 import { Row, Col, Form, Badge, Container, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home({ history }) {
-  const appContext = useContext(Context);
-  const { search, handleSearchChange } = appContext;
+  const [search, setSearch] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    history.push(`/overview/${search}`)
-  }
+  const handleSearchChange = e => {
+    setSearch(e.target.value);
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    history.push(`/overview/${search}`);
+  };
 
   return (
     <div className="flex-container">
