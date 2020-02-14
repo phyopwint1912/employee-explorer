@@ -16,7 +16,7 @@ export default function Info() {
         return res.json()
       });
       const directSubs = data[1] && data[1]['direct-subordinates'];
-      setDirectSubs(directSubs)
+      setDirectSubs(directSubs? directSubs : [])
     }
     getDirectSubs()
   },[name, setDirectSubs]);
