@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## User Stories of the assignment
-Demo Link - https://phyopwint1912.github.io/employee-explorer/
+
 Story | Acceptance Criteria | Required
 ------------ | ------------- | -------------
 As a user, I am able to search for employees | - User is able to input the employee name in the input field <br> - User is able to click search button | Yes
