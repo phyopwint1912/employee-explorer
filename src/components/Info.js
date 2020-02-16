@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams } from "react-router-dom";
 import UserCard from "./UserCard";
 import { Row, Col, Container } from "react-bootstrap";
+import { Context } from "../Context";
 
-const URL = "https://api.additivasia.io/api/v1/assignment/employees";
 export default function Info() {
   const { name } = useParams();
   const [directSubs, setDirectSubs] = useState([])
+  const appContext = useContext(Context);
+  const { URL, setEmployees } = appContext;
 
   useEffect(() => {
     const getDirectSubs = async () => {
@@ -16,10 +18,12 @@ export default function Info() {
         return res.json()
       });
       const directSubs = data[1] && data[1]['direct-subordinates'];
+      if(!directSubs) return false;
       setDirectSubs(directSubs? directSubs : [])
+      directSubs.forEach(sub => setEmployees(prev => prev.add(sub)))
     }
     getDirectSubs()
-  },[name, setDirectSubs]);
+  },[name, setDirectSubs, URL, setEmployees]);
 
   return (
     <Container>
@@ -33,7 +37,8 @@ export default function Info() {
       </Row>
       <Row>
         <Col>
-            {directSubs.map(name => <UserCard name={name} key={name} depth={0} />)}
+            {directSubs.length === 0 && <div> No Subordinates Found. </div> }
+            {directSubs.length > 1 && directSubs.map(name => <UserCard name={name} key={name} depth={0} />)}
         </Col>
       </Row>
     </Container>
