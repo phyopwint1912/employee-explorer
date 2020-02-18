@@ -5,7 +5,8 @@ export default function UserCard({ name, depth }) {
   const [directSubs, setDirectSubs] = useState([]);
   const [position, setPosition] = useState(null);
   const appContext = useContext(Context);
-  const { employees, setEmployees, URL } = appContext;
+  const { employees, setEmployees } = appContext;
+  const URL = "https://api.additivasia.io/api/v1/assignment/employees";
   useEffect(() => {
     const getDirectSubs = async () => {
       const data = await fetch(URL + `/${name}`).then(res => {

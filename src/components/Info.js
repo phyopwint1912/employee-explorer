@@ -10,8 +10,8 @@ export default function Info() {
   const { name } = useParams();
   const [directSubs, setDirectSubs] = useState([])
   const appContext = useContext(Context);
-  const { URL, setEmployees } = appContext;
-
+  const { setEmployees } = appContext;
+  const URL = "https://api.additivasia.io/api/v1/assignment/employees";
   useEffect(() => {
     const getDirectSubs = async () => {
       const data = await fetch(URL + `/${name}`).then(res => {
@@ -23,7 +23,7 @@ export default function Info() {
       directSubs.forEach(sub => setEmployees(prev => prev.add(sub)))
     }
     getDirectSubs()
-  },[name, setDirectSubs, URL, setEmployees]);
+  },[name, setDirectSubs, setEmployees]);
 
   return (
     <Container>
